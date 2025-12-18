@@ -1,64 +1,47 @@
-/*
-===========================================
-📂 File Processing Simulation with Exceptions
-===========================================
-
-🎯 Objective:
-This activity will help students:
-
-- Identify and explain JavaScript's standard exceptions through practical examples
-- Implement `finally` blocks to manage resources and ensure consistent cleanup
-
----
-📘 Scenario:
-You’ve been hired to create a system that simulates file processing for a virtual library.
-
-The system must:
-- Validate user input (file names and data)
-- Simulate file reading/writing operations
-- Ensure all resources (e.g., file handles) are closed, even if errors occur
-
----
-🧭 Instructions:
-
-Step 1: Debug Standard Exceptions  
-- Run the starter code and identify the standard exceptions being thrown  
-- Correct the issues and observe output
-
-Step 2: Add Input Validation and Custom Exceptions  
-- Validate:
-  • Missing file names 
-  • Non-string file data  
-  • Empty string data 
-
-Step 3: Implement a `finally` Block  
-- Simulate releasing resources, regardless of whether an error occurred
-
-Step 4: Test Your Solution  
-- Use a variety of inputs to confirm the `finally` block always executes
-*/
 
 // ============================================
 // 🛠️ Starter Code: processFile Function
 // ============================================
-
+// Step 1 : Ran the code and observed what needs to be corrected
 function processFile(fileName, fileData) {
+  let fileAction = null; // null will be the placeholder, will leave it empty
+
   try {
-    // TODO: Add input validation here
-    
-    // TODO: Implement simulated file processing here
+    // Step 2: Input validation with standard exceptions
+    if (!fileName) {
+      throw new ReferenceError("The file name is missing!"); //thrown when no file name is provided
+    }
+
+    if (typeof fileData !== "string") {
+      throw new TypeError("File data must be a string!"); // thrown when a string is not provided
+    }
+
+    if (fileData.trim() === "") {   // cannot have empty spaces as the file name
+      throw new Error("The file data cannot be empty!");
+    }
+
+    // file processing
+    fileAction = "OPEN";
     console.log(`Processing file: ${fileName}`);
     console.log(`File content: ${fileData}`);
-    
-    // TODO: Add simulated file operations (reading/writing)
-    
-  } catch (err) {
-    // TODO: Implement error handling
-    console.error(err);
-  }
-  // TODO: Implement a finally block to close resources
-}
 
+    // print for reading and writing
+    console.log("Reading file.");
+    console.log("Writing file.");
+  } catch (finalError) {
+    // Handling an error 
+    console.error("Error:", finalError.message);
+  } finally {     // The finally block will always run and "clean up"
+
+    if (fileAction) {
+      console.log("Closing file.");
+      fileAction = null;
+    } else {
+      console.log("No file handle to close.");
+    }
+  }
+}
+// Step 4: testing 
 // ============================================
 // 🧪 Test Cases Below
 // ============================================
